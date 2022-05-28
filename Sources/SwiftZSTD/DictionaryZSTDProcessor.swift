@@ -66,11 +66,12 @@ public class DictionaryZSTDProcessor
         dict = withDictionary
         compLevel = andCompressionLevel
     }
-    
-    deinit {
-        if (haveCDict) { ZSTD_freeCDict(compDict) }
-        if (haveDDict) { ZSTD_freeDDict(decompDict) }
-    }
+
+// try fix https://github.com/aperedera/SwiftZSTD/issues/6    
+//    deinit {
+//        if (haveCDict) { ZSTD_freeCDict(compDict) }
+//        if (haveDDict) { ZSTD_freeDDict(decompDict) }
+//    }
         
     /**
      * Compress a buffer using the dictionary and compression level specified at 
