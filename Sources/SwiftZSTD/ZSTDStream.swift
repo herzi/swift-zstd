@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftZSTDC
 
 /**
  * Types of exceptions that can be thrown when using stream operations.
@@ -27,13 +26,13 @@ public enum ZSTDStreamError : Error {
  */
 
 public class ZSTDStream {
-    // An Objective-C class instance wrapping C compression API. It can be nil
+    // A class instance wrapping C compression API. It can be nil
     // if no compression operation has been performed using this instance yet.
-    var compOC : CompressionOC? = nil
+    var compOC : Compression? = nil
     
-    // An Objective-C class instance wrapping C compression API.  It can be nil
+    // A class instance wrapping C decompression API.  It can be nil
     // if no decompression operation has been performed using this instance yet.
-    var decompOC : DecompressionOC? = nil
+    var decompOC : Decompression? = nil
     
     public init() {}
     
@@ -48,7 +47,7 @@ public class ZSTDStream {
             throw ZSTDError.invalidCompressionLevel(cl: compressionLevel)
         }
         // Create a CompressionOC object if needed
-        if compOC == nil { compOC = CompressionOC() }
+        if compOC == nil { compOC = Compression() }
         guard let unwrappedCompOC = compOC else { // failed to init CompressionOC
             throw ZSTDStreamError.operationInitFailure
         }
@@ -105,7 +104,7 @@ public class ZSTDStream {
      */
     public func startDecompression() throws {
         // Create a DecompressionOC object if needed
-        if decompOC == nil { decompOC = DecompressionOC() }
+        if decompOC == nil { decompOC = Decompression() }
         guard let unwrappedDecompOC = decompOC else { // failed to init DecompressionOC
             throw ZSTDStreamError.operationInitFailure
         }

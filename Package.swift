@@ -8,17 +8,13 @@ let package = Package(
     products: [
         .library(
             name: "SwiftZSTD",
-            targets: ["SwiftZSTD", "SwiftZSTDC", "zstdlib"]),
+            targets: ["SwiftZSTD", "zstdlib"]),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "SwiftZSTD",
-            dependencies: ["SwiftZSTDC", "zstdlib"]),
-        .target(
-            name: "SwiftZSTDC",
-            dependencies: ["zstdlib"],
-            publicHeadersPath: "include"),
+            dependencies: ["zstdlib"]),
         .target(
             name: "zstdlib",
             dependencies: [],

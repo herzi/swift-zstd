@@ -51,6 +51,8 @@ class SwiftZSTDBasicTests: XCTestCase {
         print("TESTING ON macOS!")
         #elseif os(iOS)
         print("TESTING ON iOS!")
+        #elseif os(Linux)
+        print("Testing on Linux!")
         #else
         XCTFail("BAD PLATFORM")
         #endif
