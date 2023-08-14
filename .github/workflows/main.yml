@@ -1,0 +1,36 @@
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: swift:5.8-jammy
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache Swift Dependencies
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-swift-packages
+        with:
+          # As git-checkout updates the timestamps of all files to `now`, the compile
+          # cache will not help improve performance as cached files will always seem to
+          # be out-of-date when compared with the source files modification timestamps.
+          path: |
+            .build/artifacts
+            .build/checkouts
+            .build/plugins
+            .build/repositories
+            .build/workspace-state.json
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Build
+        run:
+          swift test
